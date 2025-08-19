@@ -1,0 +1,19 @@
+# Ignore text, csv, excel files
+*.txt
+*.csv
+*.xls
+*.xlsx
+*.pkl
+
+# Ignore data and files folders
+uploads/
+files/
+track_automation/
+old_database_files/
+# Optional: ignore Python junk
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.venv/
