@@ -586,7 +586,7 @@ def automatic_email():
                                 links = [item['link'] for item in res if item.get('link')]
                                 q = f"email format for {links[0]}"
                                 results = process_run(query , q, proxy)
-                                log_query_result(log_full_file, proxy,results)
+                                log_query_result(log_full_file, proxy,results[:20])
 
                                 try:
                                     final_email =  get_final_email(results, query)
