@@ -3,7 +3,7 @@ import pandas as pd
 from flask import Flask, render_template, request, jsonify, redirect, url_for, flash
 from helper.csv_excel_loader import file_load
 from email_verifier.email_verifier import verify_app
-from automatic_email_format.web_email_scrapper_multiEngine import recover_from_logs, update_pickle_file,fetch_google_results
+from automatic_email_format.web_email_scrapper_multiEngine import recover_with_latest, update_pickle_file,fetch_google_results
 from automatic_email_format.get_best_email import run, extract_results_lists, get_final_email
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -444,6 +444,13 @@ def automatic_email():
         now = datetime.now().strftime("%Y-%m-%d")
         file_path_logs = f"logs_for_tracking{now}.txt"
 
+                # Construct full path
+        log_full_file = os.path.join(folder_name, file_path_logs)
+
+
+        log_full_file_full_path = os.path.abspath(log_full_file)
+        print("log_full_file_full_path", log_full_file_full_path)
+
 
         checkpoint_file = checkpoint_file.replace(" ","")
         df = pd.read_csv(file_path)
@@ -470,7 +477,7 @@ def automatic_email():
 
             except:
 
-                recover_from_logs(file_path_logs, output_txt_file, checkpoint_file)
+                last_index, last_file, total_results  = recover_with_latest(log_full_file_full_path, output_txt_file, checkpoint_file)
         else:
             last_index = 0
             with open(checkpoint_file, "w") as f:
@@ -500,8 +507,7 @@ def automatic_email():
         batch_size = 45 # batch inside circle
         # Folder and file name
 
-        # Construct full path
-        log_full_file = os.path.join(folder_name, file_path_logs)
+
         all_results = []
         queries = company_list[last_index:last_index+BATCH_SIZES]
         # Get the number of full batches
@@ -540,7 +546,7 @@ def automatic_email():
                     
                     
                     if FLAG == int(0):
-                         proxy = proxy1 # 122
+                         proxy = proxy4 # 122
                     if FLAG == int(1):
 
                         proxy = proxy2  # 123
@@ -550,7 +556,7 @@ def automatic_email():
 
                     
                     if FLAG == int(3):
-                         proxy = proxy4  # 126
+                         proxy = proxy1  # 126
 
                     
                     print (f"--------Flag: {FLAG} ----proxy {proxy}--------------Start Batch--------------------------------------", batch_index)
@@ -580,7 +586,7 @@ def automatic_email():
                                 links = [item['link'] for item in res if item.get('link')]
                                 q = f"email format for {links[0]}"
                                 results = process_run(query , q, proxy)
-                                log_query_result(log_full_file, query,results)
+                                log_query_result(log_full_file, proxy,results)
 
                                 try:
                                     final_email =  get_final_email(results, query)
@@ -605,20 +611,17 @@ def automatic_email():
 
                         time_p = time_p+1
 
-                          
+                        import tempfile
 
                         # Step 1: Create a temp file and write the new checkpoint data
                         with tempfile.NamedTemporaryFile('w', delete=False, dir='.', suffix='.tmp') as tmp_file:
                             tmp_file.write(f"{last_index} {output_txt_file} {total_results2}\n")
+                            tmp_file.flush()
+                            os.fsync(tmp_file.fileno())  # ensure flushed to disk
                             temp_file_name = tmp_file.name
 
-                        # Step 2: (Optional) Read back to verify temp file content
-                        with open(temp_file_name, 'r') as f:
-                            checkpoint_data = f.read()
-
-                        # Step 3: Replace the original checkpoint file with the temp file (atomic update)
+                        # Step 2: Atomically replace the old file
                         os.replace(temp_file_name, checkpoint_file)
-
 
 
                         with open(checkpoint_file, "w") as f:

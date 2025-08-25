@@ -272,6 +272,55 @@ def update_pickle_file(old_pickle_path, new_pickle_path, backup_path):
 
 
 
+import os
+import re
+import tempfile
+from datetime import datetime
+
+
+
+import os, re
+from datetime import datetime
+
+import os
+import re
+
+import re, os
+
+def get_latest_log_file(log_path):
+    """
+    Find the latest 'logs_for_tracking*.txt' file in the given directory.
+    Prioritizes today's file (2025-08-26), otherwise uses modification time.
+    """
+
+    log_dir = os.path.dirname(log_path)
+    today_file = os.path.join(log_dir, 'logs_for_tracking2025-08-26.txt')
+    latest_file = None
+    latest_mtime = None
+
+    # Check if today's file exists
+    if os.path.exists(today_file):
+        print("📄 Latest log file:", today_file)
+        return today_file
+
+    # If today's file doesn't exist, find the latest by modification time
+    for fname in os.listdir(log_dir):
+        if re.match(r"logs_for_tracking\d{4}-\d{2}-\d{2}\.txt", fname):
+            full_path = os.path.join(log_dir, fname)
+            file_mtime = os.path.getmtime(full_path)
+
+            if latest_mtime is None or file_mtime > latest_mtime:
+                latest_mtime = file_mtime
+                latest_file = full_path
+
+    print("📄 Latest log file:", latest_file)
+    return latest_file
+
+
+   
+
+
+
 
 
 import os, re, tempfile
@@ -328,3 +377,14 @@ def recover_from_logs(log_file, output_txt_file, checkpoint_file):
     os.replace(temp_file_name, checkpoint_file)
 
     return last_index, relative_name, total_results
+
+
+def recover_with_latest(log_dir, output_txt_file, checkpoint_file):
+    latest_log = get_latest_log_file(log_dir)
+    if not latest_log:
+        raise FileNotFoundError(f"No log files found in {log_dir}")
+
+    print(f"📄 Using latest log file: {os.path.basename(latest_log)}")
+
+    return recover_from_logs(latest_log, output_txt_file, checkpoint_file)
+
