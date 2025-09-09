@@ -457,11 +457,12 @@ def automatic_email():
         unique_companies = df["Company"].dropna().unique()  # Assuming 'company_name' is the column name
 
         # Write unique company names to the output text file with index
-        with open(output_txt_file, "w") as f:
+        with open(output_txt_file, "w", encoding="utf-8") as f:
             for i, company in enumerate(unique_companies, start=0):
                 f.write(f"{i} {company}\n")
 
-        with open(output_txt_file, "r" ) as file:
+        # Read back with the same encoding
+        with open(output_txt_file, "r", encoding="utf-8") as file:
             company_list = [line.strip().split(maxsplit=1)[1] for line in file if line.strip()]
 
         # Determine the starting index from the checkpoint file
