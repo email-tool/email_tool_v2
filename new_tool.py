@@ -565,6 +565,9 @@ def automatic_email():
                     end_idx = start_idx + batch_size
                     current_queries = batch[start_idx:end_idx]
                     
+
+                    current_queries = batch[start_idx:end_idx]
+                    print ("current_queries", current_queries)
                     
 
  # ============*********************************************************************************************************============
@@ -582,6 +585,8 @@ def automatic_email():
     
                         try:
                                 res = fetch_google_results(query ,proxy,  num_results=5)
+
+                                print (res)
                                 time.sleep(3)
                                 final_result = []
                                 links = [item['link'] for item in res if item.get('link')]
@@ -603,6 +608,8 @@ def automatic_email():
                                     log_query_result(log_full_file, query, f"-------> {total_results2} --------{final_email}")
                                     # Convert to DataFrame
                                 except Exception as e:
+
+                                    print(f" Failed to fetch  '{query}': {e}") 
                                    
                                     pass    
                         except Exception as e:
