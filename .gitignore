@@ -4,7 +4,11 @@
 *.xls
 *.xlsx
 *.pkl
-
+# Python virtual environment
+venv/
+.env/
+__pycache__/
+*.pyc
 # Ignore data and files folders
 uploads/
 files/
