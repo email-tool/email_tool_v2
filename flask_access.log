@@ -10267,3 +10267,209 @@
 127.0.0.1 - - [13/Sep/2025 18:01:09] "GET /socket.io/?EIO=4&transport=polling&t=Pb33jNc HTTP/1.1" 200 -
 127.0.0.1 - - [13/Sep/2025 18:01:09] "POST /socket.io/?EIO=4&transport=polling&t=Pb33jNj&sid=WHADAo3pagwRQe0zAAAC HTTP/1.1" 200 -
 127.0.0.1 - - [13/Sep/2025 18:01:09] "GET /socket.io/?EIO=4&transport=polling&t=Pb33jNj.0&sid=WHADAo3pagwRQe0zAAAC HTTP/1.1" 200 -
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:3000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-285-412
+127.0.0.1 - - [02/Jan/2026 18:30:28] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:30:29] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+127.0.0.1 - - [02/Jan/2026 18:30:35] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:30:35] "GET /database-count HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:30:38] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:30:41] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:30:41] "GET /database-count HTTP/1.1" 200 -
+ * Detected change in 'e:\\EmailTool-V2\\Barzaan\\email_creator_app\\APP\\new_tool.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-285-412
+127.0.0.1 - - [02/Jan/2026 18:32:35] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:32:36] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:32:37] "GET /database-count HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:33:17] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+ * Detected change in 'e:\\EmailTool-V2\\Barzaan\\email_creator_app\\APP\\new_tool.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-285-412
+127.0.0.1 - - [02/Jan/2026 18:39:08] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:39:10] "[33mGET /database-counts HTTP/1.1[0m" 404 -
+127.0.0.1 - - [02/Jan/2026 18:39:10] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:39:24] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+127.0.0.1 - - [02/Jan/2026 18:39:43] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:39:43] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+127.0.0.1 - - [02/Jan/2026 18:39:57] "[33mGET /database-counts HTTP/1.1[0m" 404 -
+127.0.0.1 - - [02/Jan/2026 18:39:57] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:40:01] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+127.0.0.1 - - [02/Jan/2026 18:40:15] "[33mGET /database-counts HTTP/1.1[0m" 404 -
+ * Detected change in 'e:\\EmailTool-V2\\Barzaan\\email_creator_app\\APP\\new_tool.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-285-412
+127.0.0.1 - - [02/Jan/2026 18:41:38] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:41:38] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+127.0.0.1 - - [02/Jan/2026 18:41:44] "[33mGET /database-counts HTTP/1.1[0m" 404 -
+127.0.0.1 - - [02/Jan/2026 18:41:44] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:41:47] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:41:52] "[33mGET /database-counts HTTP/1.1[0m" 404 -
+127.0.0.1 - - [02/Jan/2026 18:41:52] "GET /list-files?path=/ HTTP/1.1" 200 -
+ * Detected change in 'e:\\EmailTool-V2\\Barzaan\\email_creator_app\\APP\\new_tool.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-285-412
+127.0.0.1 - - [02/Jan/2026 18:42:13] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:42:14] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:42:15] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:43:03] "POST /upload HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:43:32] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:43:33] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:43:43] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:43:44] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:44:17] "POST /email HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:44:23] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:44:24] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:44:43] "POST /update-database-manually HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:44:46] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:44:47] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:45:06] "GET /socket.io/?EIO=4&transport=polling&t=Pj-sFEM HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:45:06] "POST /socket.io/?EIO=4&transport=polling&t=Pj-sFF9&sid=3WKazSqg1BzFXaWRAAAA HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:45:06] "GET /socket.io/?EIO=4&transport=polling&t=Pj-sFFB&sid=3WKazSqg1BzFXaWRAAAA HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:45:14] "POST /automatic-email HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:46:16] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:46:16] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:46:17] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:46:17] "GET /list-files?path=/automatic_emails_format_created/ HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:46:24] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:46:25] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:47:24] "GET /socket.io/?EIO=4&transport=websocket&sid=3WKazSqg1BzFXaWRAAAA HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:47:24] "GET / HTTP/1.1" 200 -
+ * Detected change in 'e:\\EmailTool-V2\\Barzaan\\email_creator_app\\APP\\new_tool.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-285-412
+127.0.0.1 - - [02/Jan/2026 18:50:52] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:50:53] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:50:55] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:51:00] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:51:01] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:52:16] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:52:17] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:52:20] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:52:21] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:52:23] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:52:23] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:52:26] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:52:27] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:52:31] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [02/Jan/2026 18:52:32] "GET /database-counts HTTP/1.1" 200 -
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:3000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-285-412
+127.0.0.1 - - [04/Jan/2026 22:49:26] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 22:49:27] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+127.0.0.1 - - [04/Jan/2026 22:49:29] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 22:49:30] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 22:52:52] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 22:52:53] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 22:53:05] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 22:53:05] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 22:53:08] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 22:53:09] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 22:54:37] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 22:54:38] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 22:58:04] "GET /list-files?path=/automatic_emails_format_created/ HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 22:58:05] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 22:58:09] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 22:58:10] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 22:58:40] "GET /list-files?path=/main_database/ HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 22:58:41] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 22:59:12] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 22:59:13] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:02:02] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:02:03] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:02:12] "GET /socket.io/?EIO=4&transport=polling&t=PkA4H3w HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:02:12] "POST /socket.io/?EIO=4&transport=polling&t=PkA4H42&sid=YXZYrBk_nUOMKuLfAAAA HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:02:12] "GET /socket.io/?EIO=4&transport=polling&t=PkA4H44&sid=YXZYrBk_nUOMKuLfAAAA HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:02:20] "POST /automatic-email HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:04:43] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:04:44] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:05:08] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:05:08] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:05:10] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:05:10] "GET /list-files?path=/automatic_emails_format_created/ HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:13:27] "GET /socket.io/?EIO=4&transport=polling&t=PkA6rtK HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:13:27] "POST /socket.io/?EIO=4&transport=polling&t=PkA6rtT&sid=OArYoECfASLv05GXAAAC HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:13:27] "GET /socket.io/?EIO=4&transport=polling&t=PkA6rtU&sid=OArYoECfASLv05GXAAAC HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:13:35] "POST /automatic-email HTTP/1.1" 200 -
+ * Detected change in 'e:\\EmailTool-V2\\Barzaan\\email_creator_app\\APP\\automatic_email_format\\automatic_email_runner.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-285-412
+127.0.0.1 - - [04/Jan/2026 23:15:37] "GET /socket.io/?EIO=4&transport=polling&t=PkA7L80 HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:15:37] "GET /socket.io/?EIO=4&transport=polling&t=PkA7L80.0 HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:15:37] "POST /socket.io/?EIO=4&transport=polling&t=PkA7LYj&sid=uaM31jJf7jubRzbbAAAA HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:15:37] "GET /socket.io/?EIO=4&transport=polling&t=PkA7LYk&sid=uaM31jJf7jubRzbbAAAA HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:15:37] "POST /socket.io/?EIO=4&transport=polling&t=PkA7LY-&sid=fEqQriH4gFc3wQO2AAAB HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:15:37] "GET /socket.io/?EIO=4&transport=polling&t=PkA7LY_&sid=fEqQriH4gFc3wQO2AAAB HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:15:37] "GET /socket.io/?EIO=4&transport=polling&t=PkA7LZ8&sid=fEqQriH4gFc3wQO2AAAB HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:15:38] "GET /socket.io/?EIO=4&transport=websocket&sid=uaM31jJf7jubRzbbAAAA HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:15:38] "GET /socket.io/?EIO=4&transport=websocket&sid=fEqQriH4gFc3wQO2AAAB HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:15:38] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:15:44] "GET /socket.io/?EIO=4&transport=polling&t=PkA7N4v HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:15:44] "POST /socket.io/?EIO=4&transport=polling&t=PkA7N53&sid=jYa1b_JcvlKabZZkAAAE HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:15:44] "GET /socket.io/?EIO=4&transport=polling&t=PkA7N55&sid=jYa1b_JcvlKabZZkAAAE HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:38:08] "POST /automatic-email HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:40:35] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:40:35] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:41:24] "POST /update-database-manually HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:41:33] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:41:33] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:42:23] "POST /email HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:42:29] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:42:30] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:42:31] "GET /list-files?path=/created_emails/ HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:42:32] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:42:58] "GET /socket.io/?EIO=4&transport=websocket&sid=jYa1b_JcvlKabZZkAAAE HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:42:58] "GET /download-file?path=files/created_emails/US-ND-01Dec-%20test%20jan_new_tool_output.csv HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:43:36] "GET /socket.io/?EIO=4&transport=polling&t=PkADlI3 HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:43:36] "POST /socket.io/?EIO=4&transport=polling&t=PkADlII&sid=S7YucE9kG2ekIIQhAAAG HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jan/2026 23:43:36] "GET /socket.io/?EIO=4&transport=polling&t=PkADlIN&sid=S7YucE9kG2ekIIQhAAAG HTTP/1.1" 200 -
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:3000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-285-412
+127.0.0.1 - - [05/Jan/2026 00:18:17] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [05/Jan/2026 00:18:24] "POST /email HTTP/1.1" 200 -
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:3000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-285-412
+127.0.0.1 - - [05/Jan/2026 00:19:30] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [05/Jan/2026 00:19:36] "POST /email HTTP/1.1" 200 -
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:3000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-285-412
+127.0.0.1 - - [05/Jan/2026 00:24:46] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [05/Jan/2026 00:24:47] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [05/Jan/2026 00:24:48] "GET /database-counts HTTP/1.1" 200 -
+127.0.0.1 - - [05/Jan/2026 00:24:57] "POST /email HTTP/1.1" 200 -
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:3000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-285-412
+127.0.0.1 - - [05/Jan/2026 00:29:03] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [05/Jan/2026 00:29:08] "POST /email HTTP/1.1" 200 -
+127.0.0.1 - - [05/Jan/2026 00:29:36] "GET /list-files?path=/ HTTP/1.1" 200 -
+127.0.0.1 - - [05/Jan/2026 00:29:37] "GET /database-counts HTTP/1.1" 200 -

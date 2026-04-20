@@ -1,0 +1,245 @@
+{% extends 'base.html' %}
+
+{% block title %}Upload Sheet{% endblock %}
+
+{% block style %}
+    .upload-btn-wrapper {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+    }
+    .upload-btn {
+        border: 2px solid #FFA07A;
+        color: white;
+        background-color: #FF4500;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        width: 160px; /* Increase button width */
+        justify-content: center;
+    }
+    .upload-btn svg {
+        margin-right: 8px;
+    }
+    .upload-btn-wrapper input[type=file] {
+        font-size: 100px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+    }
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <nav aria-label="breadcrumb" class="mt-5">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item h4">
+            <a href="/" style="text-decoration: none;">Home</a>
+          </li>
+          <li class="breadcrumb-item active h4" aria-current="page">
+            Upload Data
+          </li>
+        </ol>
+    </nav>
+
+    <!-- Upload Form -->
+    <form id="upload-form" enctype="multipart/form-data" class="mb-1" style="display: flex; justify-content: flex-end;">
+        {% csrf_token %}
+        <div class="upload-btn-wrapper">
+            <button class="upload-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
+                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+                    <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z"/>
+                  </svg>
+                Upload file
+            </button>
+            <input type="file" name="file" id="file" onchange="uploadFile()">
+        </div>
+    </form>
+
+    <!-- Uploaded Files Table -->
+    <!-- <h2 class="mt-2">Uploaded Files</h2> -->
+    <table class="table table-bordered table-striped mt-4">
+        <thead class="thead-dark">
+            <tr>
+                <th>Sr. No</th>
+                <th>Sheet Name</th>
+                <th>Upload Date</th>
+                <th>Process Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="files-list">
+            {% for file in files %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ file.filename }}</td>
+                <td>{{ file.created_at }}</td>
+                <td>{{ file.updated_at }}</td>
+                <td class="actions">
+                    <!-- Download Icon (_output.csv) -->
+                    <button class="btn btn-sm" onclick="performAction('{{ file.filename }}', 'download')">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="20" height="42" class="bi bi-download" viewBox="0 0 16 16">
+                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+                            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+                        </svg>
+                    </button>
+                    |
+                    <!-- Bookmark Icon (_missing.csv) -->
+                    <button class="btn btn-sm" onclick="performAction('{{ file.filename }}', 'bookmark')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="42" fill="currentColor" class="bi bi-bookmark-fill" viewBox="0 0 16 16">
+                            <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2" />
+                        </svg>
+                    </button>
+                    |
+                    <!-- Refresh Icon -->
+                    <button class="btn btn-sm" onclick="performAction('{{ file.filename }}', 'refresh')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="42" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"/>
+                            <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466"/>
+                        </svg>
+                    </button>
+                    |
+                    <!-- Red Download Icon (_summary.txt) -->
+                    <button class="btn btn-sm" onclick="performAction('{{ file.filename }}', 'red_download')">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" style="color: red;" width="20" height="42" class="bi bi-download" viewBox="0 0 16 16">
+                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+                            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+                        </svg>
+                    </button>
+                    |
+                    <!-- Yellow Download Icon (_missing_companies.csv) -->
+                    <button class="btn btn-sm" onclick="performAction('{{ file.filename }}', 'yellow_download')">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" style="color: green;" width="20" height="42" class="bi bi-download" viewBox="0 0 16 16">
+                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+                            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+                        </svg>
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    const csrftoken = getCookie('csrftoken');
+    
+    function uploadFile() {
+        let formData = new FormData(document.getElementById('upload-form'));
+        $.ajax({
+            url: '/upload-sheet',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            headers: { 'X-CSRFToken': csrftoken },
+            success: function(response) {
+                // alert(response.success);
+                addFileToTable(response.file);
+            },
+            error: function(response) {
+                alert(response.responseJSON.error);
+            }
+        });
+    }
+
+    function addFileToTable(file) {
+        let filesList = $('#files-list');
+        let newRow = `
+            <tr>
+                <td>${0}</td>
+                <td>${file.name}</td>
+                <td>${file.created_at}</td>
+                <td>${file.updated_at}</td>
+                <td class="actions">
+                    <!-- Download Icon (_output.csv) -->
+                    <button class="btn btn-sm" onclick="performAction('{{ file.filename }}', 'download')">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="20" height="42" class="bi bi-download" viewBox="0 0 16 16">
+                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+                            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+                        </svg>
+                    </button>
+                    |
+                    <!-- Bookmark Icon (_missing.csv) -->
+                    <button class="btn btn-sm" onclick="performAction('{{ file.filename }}', 'bookmark')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="42" fill="currentColor" class="bi bi-bookmark-fill" viewBox="0 0 16 16">
+                            <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2" />
+                        </svg>
+                    </button>
+                    |
+                    <!-- Refresh Icon -->
+                    <button class="btn btn-sm" onclick="performAction('{{ file.filename }}', 'refresh')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="42" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"/>
+                            <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466"/>
+                        </svg>
+                    </button>
+                    |
+                    <!-- Red Download Icon (_summary.txt) -->
+                    <button class="btn btn-sm" onclick="performAction('{{ file.filename }}', 'red_download')">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" style="color: red;" width="20" height="42" class="bi bi-download" viewBox="0 0 16 16">
+                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+                            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+                        </svg>
+                    </button>
+                    |
+                    <!-- Yellow Download Icon (_missing_companies.csv) -->
+                    <button class="btn btn-sm" onclick="performAction('{{ file.filename }}', 'yellow_download')">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" style="color: green;" width="20" height="42" class="bi bi-download" viewBox="0 0 16 16">
+                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+                            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+                        </svg>
+                    </button>
+                </td>
+            </tr>
+        `;
+        filesList.prepend(newRow);
+        window.location.reload()
+    }
+
+    function performAction(fileName, action) {
+        $.ajax({
+            url: '/upload-sheet-actions',
+            type: 'POST',
+            data: JSON.stringify({ 'file_name': fileName, 'action': action }),
+            contentType: 'application/json',
+            headers: { 'X-CSRFToken': csrftoken },
+            success: function(response) {
+                console.log(response);
+                // alert(response.message);
+                // Handle the response, e.g., downloading a file, bookmarking, etc.
+                window.location.href = `/upload-sheet-actions?file_name=${encodeURIComponent(fileName)}&action=${action}`;
+            },
+            error: function(response) {
+                console.log(response);
+                alert('Error: ' + response.responseJSON.error);
+            }
+        });
+    }
+</script>
+</script>
+{% endblock %}

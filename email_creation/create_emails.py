@@ -6,6 +6,9 @@ from email_creation.reader_email import reader
 
 
 def create_emails2(row, email_patterns):
+    print ("rows ")
+
+    print (row, email_patterns)
     
 
     company_name = row['Company'].strip()  # Remove leading/trailing spaces
@@ -100,6 +103,8 @@ def email_creator_app(file,email_patterns):
         processed_data['Email'] = ""
         
         # Apply email creation function
+        print ("*"*80)
+        print ("hgping ythrough kcjsidjcsidjcisdjfi")
     
         processed_data['Email'] = processed_data.apply(lambda row: create_emails2(row, email_patterns), axis=1)
         print ("email generated")

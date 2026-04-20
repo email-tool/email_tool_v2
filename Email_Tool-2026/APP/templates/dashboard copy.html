@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Flask Dashboard</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2 bg-dark text-white p-3">
+                <h5>Menu</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link text-white" href="#database" onclick="showSection('database')">Database</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="#email" onclick="showSection('email')">Email Creator</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="#email-verify" onclick="showSection('email-verify')">Email verifier</a></li>
+                </ul>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-7">
+                <!-- Database Section -->
+                <div id="database" class="section">
+                    <h3>Upload Database</h3>
+                    <form id="uploadForm" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="file" class="form-label">Upload CSV/Excel</label>
+                            <input class="form-control" type="file" name="file" id="file">
+                        </div>
+                        <div class="mb-3">
+                            <label for="folder" class="form-label">Upload Folder</label>
+                            <input class="form-control" type="file" name="folder" id="folder" webkitdirectory>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="processFile()">Process</button>
+                    </form>
+                    <form id="UpdateDB" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="files" class="form-label">Update Database</label>
+                            <input class="form-control" type="file" name="file" id="file">
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="processFile()">Update Database</button>
+                    </form>
+                </div>
+
+                <!-- Email Creator Section -->
+                <div id="email" class="section" style="display: none;">
+                    <h3>Email Creator</h3>
+                    <form id="emailForm" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="file" class="form-label">Upload CSV/Excel</label>
+                            <input class="form-control" type="file" name="file" id="file">
+                        </div>
+                        <div class="mb-3">
+                            <label for="folder" class="form-label">Upload Folder</label>
+                            <input class="form-control" type="file" name="folder" id="folder" webkitdirectory>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="CreateEmail()">Process</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Log Section -->
+            <div class="col-md-3">
+                <h4>Logs</h4>
+                <div id="logSection" class="border p-3" style="height: 300px; overflow-y: auto;">
+                    No logs yet.
+                </div>
+            </div>
+                <!-- Email Verifier -->
+                <div id="email-verify" class="section" style="display: none;">
+                    <h3>Email verifier</h3>
+                    <form id="emailverify" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="file" class="form-label">Upload CSV/Excel</label>
+                            <input class="form-control" type="file" name="file" id="file">
+                        </div>
+
+                        <button type="button" class="btn btn-primary" onclick="verifyEmail()">Verify</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
+            document.getElementById(sectionId).style.display = 'block';
+        }
+
+        function processFile() {
+            const formData = new FormData(document.getElementById('uploadForm'));
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                const logSection = document.getElementById('logSection');
+                if (data.error) {
+                    logSection.innerHTML = `<p class="text-danger">${data.error}</p>`;
+                } else {
+                    logSection.innerHTML = `<p class="text-success">${data.log}</p>`;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function CreateEmail() {
+            const formData = new FormData(document.getElementById('emailForm'));
+            fetch('/email', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                const logSection = document.getElementById('logSection');
+                if (data.error) {
+                    logSection.innerHTML = `<p class="text-danger">${data.error}</p>`;
+                } else {
+                    logSection.innerHTML = `<p class="text-success">${data.log}</p>`;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function verifyEmail() {
+            const formData = new FormData(document.getElementById('emailverify'));
+            fetch('/email-verify', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                const logSection = document.getElementById('logSection');
+                if (data.error) {
+                    logSection.innerHTML = `<p class="text-danger">${data.error}</p>`;
+                } else {
+                    logSection.innerHTML = `<p class="text-success">${data.log}</p>`;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: >
+      bash -c "
+              python manage.py collectstatic --noinput &&
+              python manage.py makemigrations dashboard && 
+              python manage.py migrate dashboard && 
+              python manage.py makemigrations && 
+              python manage.py migrate && 
+              gunicorn email_generator.wsgi:application --bind 0.0.0.0:8000"
+    volumes:
+      - .:/app
+      - static_volume:/app/staticfiles
+      - media_volume:/app/uploads
+    ports:
+      - "8123:8000"
+    env_file:
+      - .env
+  #   depends_on:
+  #     - db
+
+  # db:
+  #   image: postgres:13
+  #   volumes:
+  #     - email_gen_pg_data:/var/lib/postgresql/data
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - "8124:5432"
+
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - static_volume:/app/static
+      - media_volume:/app/uploads
+    ports:
+      - "8125:80"
+    depends_on:
+      - web
+
+volumes:
+  # email_gen_pg_data:
+  static_volume:
+  media_volume:
