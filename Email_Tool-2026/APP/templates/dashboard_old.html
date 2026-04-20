@@ -363,7 +363,39 @@
             finally { isProcessing = false; }
         }
 
-        function processFile() { runBackendTask('/upload', 'uploadForm', 'Database trained!'); }
+
+        function processFile() {
+            if (isProcessing) { updateLog('Task already running', 'error'); return; }
+            const formElement = document.getElementById('uploadForm');
+            const formData = new FormData(formElement);
+            if (!formData.get('file') && !formData.getAll('folder').length) {
+                updateLog('Select a file or folder first', 'error'); return;
+            }
+            isProcessing = true;
+            updateLog('Starting database training...', 'processing');
+
+            const socket = io();
+            socket.on('train_log', data => {
+                if (!data.message) return;
+                const kind = data.type === 'success' ? 'success'
+                           : data.type === 'error'   ? 'error'
+                           : 'processing';
+                updateLog(data.message, kind);
+            });
+
+            fetch('/train-database', { method: 'POST', body: formData })
+                .then(r => r.json())
+                .then(data => {
+                    socket.disconnect();
+                    if (data.error) {
+                        updateLog(data.error, 'error');
+                    } else {
+                        updateLog(data.log || 'Database trained!', 'success');
+                    }
+                })
+                .catch(() => { socket.disconnect(); updateLog('Network error', 'error'); })
+                .finally(() => isProcessing = false);
+        }
         function updateDatabaseManually() { runBackendTask('/update-database-manually', 'updateForm', 'Database updated!'); }
         function createEmail() { runBackendTask('/email', 'emailForm', 'Emails generated!'); }
         function verifyEmail() { runBackendTask('/emailverify', 'emailverify', 'Verification complete!'); }
