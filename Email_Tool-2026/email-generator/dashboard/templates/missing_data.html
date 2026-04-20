@@ -1,0 +1,424 @@
+{% extends 'base.html' %}
+
+{% block title %}Missing Data{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Navbar-->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Missing Data</li>
+        </ol>
+    </nav>
+
+    <!-- Alert Message-->
+    <div id="no-file-message" class="alert alert-warning" style="display: none;">No data file is assigned.</div>
+
+    <!-- Notification Toast -->
+    <div id="toast-container" style="position: fixed; top: 20px; right: 20px; z-index: 1050; width: auto; max-width: 350px;"></div>
+
+    <!-- New Row input fields -->
+    <div id="new-row-inputs" class="mb-4 mt-5 row" style="display: none;">
+        <div id="input-fields" class="d-flex flex-wrap col"></div>
+        <div class="col-auto p-1">
+            <button class="btn btn-success btn-lg" onclick="addNewRow()">Add New Row</button>
+        </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="input-group mb-4 m-1" style="max-width: 400px; float: right;">
+        <input type="text" class="form-control mr-2 large-font" placeholder="Search by Company" id="search-company">
+        <div class="input-group-append">
+            <button class="btn btn-success mx-2 btn-lg" type="button" onclick="fetchPage(1)">Search</button>
+            <button class="btn btn-outline-secondary btn-lg" type="button" onclick="resetSearch()">Reset</button>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <table class="table table-bordered table-striped" id="data-table" style="display: none;">
+        <thead class="thead-dark">
+            <tr id="table-header"></tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+    </table>
+
+    <!-- Pagination -->
+    <nav aria-label="Page navigation example" id="pagination-nav" style="display: none;">
+        <ul class="pagination justify-content-center" id="pagination"></ul>
+    </nav>
+</div>
+
+<style>
+    #toast-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1050;
+        width: auto;
+        max-width: 350px;
+    }
+    
+    .custom-select-wrapper {
+        position: relative;
+    }
+
+    .custom-select {
+        width: 100%;
+        padding-right: 30px;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        appearance: none;
+    }
+
+    .custom-select-wrapper::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        width: 16px;
+        height: 16px;
+        pointer-events: none;
+        background-image: url('https://cdn-icons-png.flaticon.com/512/60/60995.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        transform: translateY(-50%);
+    }
+
+    .large-font {
+        font-size: 1.1em; /* Adjust this value to increase or decrease the font size */
+    }
+</style>
+
+<script>
+    let currentPage = 1;
+    let perPage = 100;
+    let totalPages = 1;
+    let columns = [];
+    let initialData = null;
+    let startRow = 0;
+    let total_rows = 100;
+
+    const mailPatterns = ['FirstName', 'LastName', 'FirstName.LastName',
+                            'FirstName_LastName', 'LastName.FirstName', 'LastName_FirstName',
+                            'FirstName_1letterLastName', 'LastName_1letterFirstName', 'FirstNameLastName_1letter',
+                            'FirstName_1letter.LastName', 'LastName_1letter.FirstName', 'FirstName.LastName_1letter', 
+                            'FirstName_1letter_LastName', 'LastName_1letter_FirstName', 'FirstName_LastName_1letter'
+                        ];
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    const csrftoken = getCookie('csrftoken');
+
+    function fetchPage(page) {
+        const searchTerm = $('#search-company').val();
+        $.ajax({
+            url: '/get-paginated-data',
+            type: 'GET',
+            data: { page: page, per_page: perPage, search_term: searchTerm },
+            success: function(response) {
+                if (response.data.length > 0) {
+                    displayTable(response);
+                    setupPagination(response.total_pages, page);
+                    $('#save-button').show();
+                    $('#data-table').show();
+                    $('#pagination-nav').show();
+                    $('#no-file-message').hide();
+                    columns = response.columns;
+                    console.log(columns);
+                    startRow = response.start_row;
+                    total_rows = response.total_rows
+                    showInputFields(columns);
+                } else {
+                    $('#no-file-message').show();
+                    $('#data-table').hide();
+                    $('#pagination-nav').hide();
+                    $('#save-button').hide();
+                }
+            },
+            error: function(error) {
+                $('#no-file-message').text(error.responseJSON.error).show();
+                $('#data-table').hide();
+                $('#pagination-nav').hide();
+                $('#save-button').hide();
+            }
+        });
+    }
+
+    function resetSearch() {
+        $('#search-company').val('');
+        fetchPage(1);
+    }
+
+
+    function displayTable(response) {
+        let tableHeader = $('#table-header');
+        let tableBody = $('#table-body');
+    
+        tableHeader.empty();
+        tableBody.empty();
+    
+        if (response.columns.length > 0) {
+            columns = response.columns;
+            columns.forEach(header => {
+                tableHeader.append(`<th class="large-font">${header}</th>`);
+            });
+            tableHeader.append('<th class="large-font">Actions</th>');
+        }
+    
+        response.data.forEach((row, index) => {
+            let rowHtml = `<tr data-original-index="${response.original_indices[index]}">`; // Store original index
+            row.forEach((cell, colIndex) => {
+                if (columns[colIndex] === 'Mail Patterns') {
+                    rowHtml += `<td class="large-font"><div class="custom-select-wrapper"><select class="form-control custom-select"><option selected hidden>${cell}</option>${mailPatterns.map(pattern => `<option ${cell === pattern ? 'selected' : ''}>${pattern}</option>`).join('')}</select></div></td>`;
+                } else if (columns[colIndex] === 'Sr No' || columns[colIndex] === 'Update date') {
+                    rowHtml += `<td class="large-font">${cell}</td>`;
+                } else {
+                    rowHtml += `<td class="large-font" contenteditable="true">${cell}</td>`;
+                }
+            });
+            rowHtml += `<td class="large-font"><div class="d-flex justify-content-between gap-2"><button class="btn btn-primary btn-sm" onclick="updateRow(this)">Update</button><button class="btn btn-warning btn-sm" onclick="skipRow(this)">Skip</button></div></td>`;
+            rowHtml += '</tr>';
+            tableBody.append(rowHtml);
+        });
+    }
+
+    function setupPagination(totalPages, currentPage) {
+        let pagination = $('#pagination');
+        pagination.empty();
+        for (let i = 1; i <= totalPages; i++) {
+            let activeClass = i === currentPage ? 'active' : '';
+            pagination.append(`<li class="page-item ${activeClass}"><a class="page-link" href="#" onclick="fetchPage(${i})">${i}</a></li>`);
+        }
+    }
+
+    function updateRow(button) {
+        let row = $(button).closest('tr');
+        let originalIndex = row.data('original-index'); // Get the original index
+        let rowData = [];
+        row.find('td').each(function(index, td) {
+            if (index < columns.length) {
+                if (columns[index] === 'Mail Patterns') {
+                    rowData.push($(td).find('select').val());
+                } else if (columns[index] === 'Sr No' || columns[index] === 'Update date') {
+                    rowData.push($(td).text());
+                } else {
+                    rowData.push($(td).text());
+                }
+            }
+        });
+    
+        // Get current date and time in Indian Standard Time (IST) and format it
+        let now = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+        let [date, time] = now.split(", ");
+        let [day, month, year] = date.split("/");
+        let [hour, minute, second] = time.split(/:| /);
+        let period = time.split(" ")[1];
+        let formattedDatetime = `${day}-${month}-${year}, ${hour}:${minute}:${second} ${period}`;
+    
+        rowData[columns.indexOf('Update date')] = formattedDatetime;
+    
+        // Update the live cell in the table
+        row.find('td').eq(columns.indexOf('Update date')).text(formattedDatetime);
+    
+        $.ajax({
+            url: '{% url "save_edited_data" %}',
+            type: 'POST',
+            data: JSON.stringify({ data: rowData, index: originalIndex }), // Use the original index
+            contentType: 'application/json',
+            headers: { 'X-CSRFToken': csrftoken },
+            success: function(response) {
+                showToast('Success', 'Row updated successfully', 'success');
+                if (originalIndex === -1) {
+                    fetchPage(currentPage);
+                }
+            },
+            error: function(response) {
+                showToast('Error', 'Failed to update row', 'error');
+            }
+        });
+    }
+
+    function skipRow(button) {
+        let row = $(button).closest('tr');
+        let srNo = parseInt(row.find('td:first').text());  // Get the Sr No from the first cell
+        let rowData = [];
+    
+        row.find('td').each(function(index, td) {
+            if (index < columns.length) {
+                if (columns[index] === 'Mail Patterns') {
+                    rowData.push($(td).find('select').val());
+                } else {
+                    rowData.push($(td).text());
+                }
+            }
+        });
+    
+        $.ajax({
+            url: '{% url "skip_row" %}',
+            type: 'POST',
+            data: JSON.stringify({ data: rowData, sr_no: srNo }),  // Send sr_no instead of index
+            contentType: 'application/json',
+            headers: { 'X-CSRFToken': csrftoken },
+            success: function(response) {
+                showToast('Success', 'Row skipped successfully', 'success');
+                row.remove(); // Remove the row from the table in the frontend
+            },
+            error: function(response) {
+                showToast('Error', 'Failed to skip row', 'error');
+            }
+        });
+    }
+
+    
+
+    function addNewRow() {
+        let newRow = [];
+        let isValid = true;
+    
+        // Get the maximum Sr No from the table
+        let maxSrNo = 0;
+        $('#table-body tr').each(function() {
+            let srNo = parseInt($(this).find('td').first().text());
+            if (srNo > maxSrNo) {
+                maxSrNo = srNo;
+            }
+        });
+        let newSrNo = maxSrNo + 1; // Increment the max Sr No by 1
+    
+        for (let i = 0; i < columns.length; i++) {
+            if (columns[i] === 'Sr No') {
+                newRow.push(newSrNo); // Set Sr No based on max Sr No
+            } else if (columns[i] === 'Update date') {
+                // Get current date and time in Indian Standard Time (IST) and format it
+                let now = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+                let [date, time] = now.split(", ");
+                let [day, month, year] = date.split("/");
+                let [hour, minute, second] = time.split(/:| /);
+                let period = time.split(" ")[1];
+                let formattedDatetime = `${day}-${month}-${year}, ${hour}:${minute}:${second} ${period}`;
+                newRow.push(formattedDatetime);
+            } else {
+                let value;
+                if (columns[i] === 'Mail Patterns') {
+                    value = $(`#input-${i}`).val();
+                } else {
+                    value = $(`#input-${i}`).val();
+                }
+                if (!value) {
+                    isValid = false;
+                    break; // Exit the loop if any input is empty
+                }
+                newRow.push(value);
+            }
+        }
+    
+        if (!isValid) {
+            showToast('Error', 'Please fill in all input fields before adding a new row.', 'error');
+            return; // Do not proceed if any input is empty
+        }
+    
+        let tableBody = $('#table-body');
+        let rowHtml = '<tr>';
+        newRow.forEach((cell, colIndex) => {
+            if (columns[colIndex] === 'Mail Patterns') {
+                rowHtml += `<td class="large-font"><div class="custom-select-wrapper"><select class="form-control custom-select"><option selected hidden>${cell}</option>${mailPatterns.map(pattern => `<option ${cell === pattern ? 'selected' : ''}>${pattern}</option>`).join('')}</select></div></td>`;
+            } else if (columns[colIndex] === 'Sr No' || columns[colIndex] === 'Update date') {
+                rowHtml += `<td class="large-font">${cell}</td>`;
+            } else {
+                rowHtml += `<td class="large-font" contenteditable="true">${cell}</td>`;
+            }
+        });
+        rowHtml += `<td class="large-font"><div class="d-flex justify-content-between gap-2"><button class="btn btn-primary btn-sm" onclick="updateRow(this)">Update</button><button class="btn btn-warning btn-sm" onclick="skipRow(this)">Skip</button></div></td>`;
+        rowHtml += '</tr>';
+        tableBody.append(rowHtml);
+    
+        $.ajax({
+            url: '{% url "save_edited_data" %}',
+            type: 'POST',
+            data: JSON.stringify({data: newRow, index: -1}),
+            contentType: 'application/json',
+            headers: { 'X-CSRFToken': csrftoken },
+            success: function(response) {
+                showToast('Success', 'New Row added successfully', 'success');
+                // Clear input fields after successful addition
+                for (let i = 0; i < columns.length; i++) {
+                    if (columns[i] !== 'Sr No' && columns[i] !== 'Update date') {
+                        $(`#input-${i}`).val('');
+                    }
+                }
+                //fetchPage(currentPage); // Uncomment this if you want to refresh the table after adding a new row
+            },
+            error: function(response) {
+                showToast('Error', 'Failed to add new row', 'error');
+            }
+        });
+    }
+    
+
+
+    function showInputFields(columns) {
+        let inputFieldsDiv = $('#input-fields');
+        inputFieldsDiv.empty();
+        columns.forEach((column, index) => {
+            if (column === 'Sr No' || column === 'Update date') {
+                return;  // Skip Sr No and Update date columns
+            }
+            if (column === 'Mail Patterns') {
+                inputFieldsDiv.append(`<div class="col-auto p-1 custom-select-wrapper"><select class="form-control custom-select mb-2 large-font" id="input-${index}"><option selected hidden>Select a pattern</option>${mailPatterns.map(pattern => `<option>${pattern}</option>`).join('')}</select></div>`);
+            } else {
+                inputFieldsDiv.append(`<div class="col-auto p-1"><input type="text" class="form-control mb-2 large-font" placeholder="${column}" id="input-${index}"></div>`);
+            }
+        });
+        $('#new-row-inputs').show();
+    }
+
+
+
+    function showToast(title, message, type) {
+        let toastContainer = $('#toast-container');
+        toastContainer.empty(); // Clear existing toast before showing new one
+
+        let toastClass = 'bg-primary text-white'; // Default toast class
+        if (type === 'success') {
+            toastClass = 'bg-success text-white';
+        } else if (type === 'error') {
+            toastClass = 'bg-danger text-white';
+        } else if (type === 'warning') {
+            toastClass = 'bg-warning text-dark';
+        }
+
+        let toastHTML = `
+            <div class="toast ${toastClass}" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong class="mr-auto">${title}</strong>
+                </div>
+                <div class="toast-body">
+                    ${message}
+                </div>
+            </div>
+        `;
+        toastContainer.append(toastHTML);
+        $('.toast').toast({ delay: 3000 });
+        $('.toast').toast('show');
+    }
+
+
+    $(document).ready(function() {
+        fetchPage(1);
+    });
+</script>
+{% endblock %}
