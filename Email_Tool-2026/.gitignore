@@ -1,0 +1,46 @@
+# 🔹 Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.zip
+APP/files/
+*.log
+*.ipynb_checkpoints/
+# 🔹 Virtual environment
+venv/
+env/
+.venv/
+
+# 🔹 Environment variables
+.env
+
+# 🔹 Logs
+*.log
+
+# 🔹 OS files
+.DS_Store
+Thumbs.db
+
+# 🔹 IDE files
+.vscode/
+.idea/
+
+# 🔹 Build / dist
+build/
+dist/
+*.egg-info/
+
+# 🔹 Jupyter
+.ipynb_checkpoints/
+
+# 🔹 ZIP & data files
+*.zip
+*.csv
+*.xlsx
+
+# 🔹 Your external file
+../merged_data.zip
+
+# 🔹 IMPORTANT: Ignore all your data folder
+APP/files/

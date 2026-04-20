@@ -1,0 +1,83 @@
+{
+  "_comment": "Single source of truth for all email patterns used across the repo.",
+  "_placeholders": {
+    "{fn}": "first name (lowercase)",
+    "{ln}": "last name (lowercase)",
+    "{fi}": "first initial (single char)",
+    "{li}": "last initial (single char)"
+  },
+
+  "patterns": {
+    "FirstName":                     "{fn}",
+    "LastName":                      "{ln}",
+    "FirstInitial":                  "{fi}",
+    "LastInitial":                   "{li}",
+
+    "FirstName.LastName":            "{fn}.{ln}",
+    "FirstName_LastName":            "{fn}_{ln}",
+    "FirstName-LastName":            "{fn}-{ln}",
+    "FirstNameLastName":             "{fn}{ln}",
+
+    "LastName.FirstName":            "{ln}.{fn}",
+    "LastName_FirstName":            "{ln}_{fn}",
+    "LastName-FirstName":            "{ln}-{fn}",
+    "LastNameFirstName":             "{ln}{fn}",
+
+    "FirstInitial.LastName":         "{fi}.{ln}",
+    "FirstInitial_LastName":         "{fi}_{ln}",
+    "FirstInitial-LastName":         "{fi}-{ln}",
+    "FirstInitialLastName":          "{fi}{ln}",
+
+    "FirstName.LastInitial":         "{fn}.{li}",
+    "FirstName_LastInitial":         "{fn}_{li}",
+    "FirstName-LastInitial":         "{fn}-{li}",
+    "FirstNameLastInitial":          "{fn}{li}",
+
+    "LastName.FirstInitial":         "{ln}.{fi}",
+    "LastName_FirstInitial":         "{ln}_{fi}",
+    "LastName-FirstInitial":         "{ln}-{fi}",
+    "LastNameFirstInitial":          "{ln}{fi}",
+
+    "LastInitial.FirstName":         "{li}.{fn}",
+    "LastInitial_FirstName":         "{li}_{fn}",
+    "LastInitial-FirstName":         "{li}-{fn}",
+    "LastInitialFirstName":          "{li}{fn}",
+
+    "FirstInitial.LastInitial":      "{fi}.{li}",
+    "FirstInitial_LastInitial":      "{fi}_{li}",
+    "FirstInitial-LastInitial":      "{fi}-{li}",
+    "FirstInitialLastInitial":       "{fi}{li}",
+
+    "LastInitial.FirstInitial":      "{li}.{fi}",
+    "LastInitial_FirstInitial":      "{li}_{fi}",
+    "LastInitial-FirstInitial":      "{li}-{fi}",
+    "LastInitialFirstInitial":       "{li}{fi}",
+
+    "FirstInitialLastNameLastInitial": "{fi}{ln}{li}"
+  },
+
+  "aliases": {
+    "FirstName1.LastName":     "FirstInitial.LastName",
+    "FirstName1LastName":      "FirstInitialLastName",
+    "FirstName.LastName1":     "FirstName.LastInitial",
+    "FirstNameLastName1":      "FirstNameLastInitial",
+    "LastNameFirstName1":      "LastNameFirstInitial",
+
+    "FirstName_1letterLastName":   "FirstInitialLastName",
+    "FirstName_1letter.LastName":  "FirstInitial.LastName",
+    "FirstName_1letter_LastName":  "FirstInitial_LastName",
+    "LastName_1letterFirstName":   "LastInitialFirstName",
+    "LastName_1letter.FirstName":  "LastInitial.FirstName",
+    "LastName_1letter_FirstName":  "LastInitial_FirstName",
+    "FirstNameLastName_1letter":   "FirstNameLastInitial",
+    "FirstName.LastName_1letter":  "FirstName.LastInitial",
+    "FirstName_LastName_1letter":  "FirstName_LastInitial"
+  },
+
+  "invalid": [
+    "unknown",
+    "unknown pattern",
+    "no valid pattern found",
+    ""
+  ]
+}

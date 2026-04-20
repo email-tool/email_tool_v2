@@ -1,0 +1,34 @@
+{
+  "_comment": "Maps every known user column name variation to the internal standard name.",
+  "_standard_columns": ["company", "first_name", "last_name", "email", "contact_name"],
+  "_mandatory": ["company", "first_name", "last_name", "email"],
+  "_note": "first_name and last_name can be derived from contact_name if both are missing.",
+
+  "company": [
+    "company", "company name", "companyname", "organisation", "organization",
+    "org", "firm", "account", "account name", "accountname", "employer",
+    "business", "business name", "client", "client name"
+  ],
+
+  "first_name": [
+    "first name", "firstname", "first", "fname", "f name",
+    "given name", "givenname", "forename", "first_name"
+  ],
+
+  "last_name": [
+    "last name", "lastname", "last", "lname", "l name",
+    "surname", "family name", "familyname", "last_name"
+  ],
+
+  "email": [
+    "email", "email address", "emailaddress", "e-mail", "e mail",
+    "mail", "email id", "emailid", "work email", "business email",
+    "corporate email", "official email"
+  ],
+
+  "contact_name": [
+    "contact name", "contact", "full name", "fullname", "name",
+    "person", "person name", "employee", "employee name",
+    "contact_name", "contactname"
+  ]
+}
